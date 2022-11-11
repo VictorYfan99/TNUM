@@ -1,0 +1,153 @@
+---
+title: "Tnum assignment"
+author: "Jiahao Liu"
+date: "2022-11-09"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assignment 1
+```{r}
+library(tnum)
+tnum.loadLibs() 
+tnum.authorize(ip = "mssp.truenum.com:8080", creds = "ljiahao@bu.edu:marlin")
+
+#tnum.getAllProperties()
+#tnum.getAllSubjects()
+#tnum.getAllTags()
+
+chpt0 <- tnum.query("subj:Time_Machine:Chapter:0:* and stringval:")
+kable(chpt0$value)
+chpt1 <- tnum.query("subj:Time_Machine:Chapter:1:* and stringval:era")
+kable(chpt1$value)
+chpt2 <- tnum.query("subj:Time_Machine:Chapter:2:* and stringval:era")
+kable(chpt2$value)
+chpt4 <- tnum.query("subj:Time_Machine:Chapter:4:* and stringval:era")
+kable(chpt4$value)
+chpt8 <- tnum.query("subj:Time_Machine:Chapter:8:* and stringval:Eloi")
+kable(chpt8$value)
+chpt10 <- tnum.query("subj:Time_Machine:Chapter:10:* and stringval:Morlocks")
+kable(chpt10$value)
+chpt12 <- tnum.query("subj:Time_Machine:Chapter:12:* and stringval:Morlocks")
+kable(chpt12$value)
+chpt13 <- tnum.query("subj:Time_Machine:Chapter:13:* and stringval:Morlocks")
+kable(chpt13$value)
+chpt15 <- tnum.query("subj:Time_Machine:Chapter:15:* and stringval:Morlocks")
+kable(chpt15$value)
+chpt17 <- tnum.query("subj:Time_Machine:Chapter:17:* and stringval:")
+kable(chpt17$value)
+
+```
+
+# Assignment 2
+```{r}
+ex1 <- tnum.query("subj:Connecticut* and prop:population:bachelors and numval: >50000")
+kable(ex1)
+#tnum.graphPathList(ex1$subject)
+#tnum.graphTnumList(ex1, tagpattern = ".*")
+```
+```{r}
+ex2 <- tnum.query("subj:Maine* and prop:population:masters and numval: >8000")
+kable(ex2)
+#tnum.graphPathList(ex2$subject)
+#tnum.graphTnumList(ex2, tagpattern = ".*")
+```
+```{r}
+ex3 <- tnum.query("subj:New_Hampshire* and prop:population:bachelors and numval: >20000")
+kable(ex3)
+```
+```{r}
+ex4 <- tnum.query("subj:Massachusetts* and prop:population:bachelors and numval: >130000")
+kable(ex4)
+```
+```{r}
+ex5 <- tnum.query("subj:Massachusetts* and prop:population:masters and numval: >80000")
+kable(ex5)
+```
+
+```{r}
+ex6 <- tnum.query("subj:Massachusetts* and prop:population:no_health_insurance and numval: >20000")
+kable(ex6)
+```
+```{r}
+ex7 <- tnum.query("subj:Maine* and prop:population:no_health_insurance and numval: >8000")
+kable(ex7)
+```
+```{r}
+ex8 <- tnum.query("subj:Connecticut* and prop:population:no_health_insurance and numval: >8000")
+kable(ex8)
+```
+
+```{r}
+ex9 <- tnum.query("subj:Rhode_Island* and prop:population:masters and numval: >6000")
+kable(ex9)
+```
+```{r}
+ex10 <- tnum.query("subj:Rhode_Island* and prop:population:bachelors and numval: >6000")
+kable(ex10)
+```
+
+
+
+
+
+
+```{r}
+tn1 <- tnum.postStatement(
+  stmt = "The biggest number of bachelors in Connecticut is 172191",
+  notes = "Our first truenumber"
+)
+
+tn2 <- tnum.postStatement(
+  stmt = "The biggest number of masters in Maine is 27390", 
+  notes = "Our second truenumber"
+)
+
+tn3 <- tnum.postStatement(
+  stmt = "the biggest number of bachelors in NewHampshire is 70773", 
+  notes = "Our third truenumber"
+)
+
+tn4 <- tnum.postStatement(
+  stmt = "The biggest number of bachelors in Massachusetts is 308958", 
+  notes = "Our forth truenumber"
+)
+
+tn5 <- tnum.postStatement(
+  stmt = "The biggest number of masters in Massachusetts is 218821", 
+  notes = "Our fifth truenumber"
+)
+
+tn6 <- tnum.postStatement(
+  stmt = "the biggest number of people with no health insurance in Massachusetts is 39401", 
+  notes = "Our sixth truenumber"
+)
+
+tn7 <- tnum.postStatement(
+  stmt = "the biggest number of people with no health insurance in Maine is 16666", 
+  notes = "Our seventh truenumber"
+)
+
+tn8 <- tnum.postStatement(
+  stmt = "the biggest number of people with no health insurance in Connecticut is 78804", 
+  notes = "Our eighth truenumber"
+)
+
+tn9 <- tnum.postStatement(
+  stmt = "the biggest number of master population in Rhode Island is 35654", 
+  notes = "Our ninth truenumber"
+)
+
+tn10 <- tnum.postStatement(
+  stmt = "the biggest number of bachelors population in Rhode Island is 25355", 
+  notes = "Our tenth truenumber"
+)
+
+df <- tnum.jsonArray(list(tn1, tn2, tn3, tn4, tn5, tn6, tn7, tn8, tn9, tn10))
+kable(df)
+```
